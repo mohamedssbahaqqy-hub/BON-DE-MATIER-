@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bon de matière</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f5f8;
+    color:#222;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+
+.header{
+    background:#064b9b;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    margin:0;
+    font-size:25px;
+}
+
+.header p{
+    margin:7px 0 0;
+    font-size:14px;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2{
+    color:#064b9b;
+    font-size:19px;
+    margin-top:0;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:12px 0 6px;
+}
+
+select,
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    background:white;
+}
+
+button{
+    border:0;
+    border-radius:8px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:5px;
+}
+
+.btn-primary{
+    background:#064b9b;
+    color:white;
+}
+
+.btn-success{
+    background:#198754;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+}
+
+.btn-secondary{
+    background:#6c757d;
+    color:white;
+}
+
+.actions{
+    text-align:center;
+    margin:20px 0;
+}
+
+/* BON */
+
+#bon{
+    background:white;
+    padding:30px;
+    margin-top:20px;
+    border-radius:10px;
+}
+
+.bon-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #064b9b;
+    padding-bottom:15px;
+    margin-bottom:15px;
+}
+
+.bon-title{
+    color:#064b9b;
+}
+
+.bon-title h1{
+    margin:0;
+    font-size:27px;
+}
+
+.bon-info{
+    line-height:1.8;
+    font-size:14px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 25px;
+    margin-bottom:20px;
+}
+
+.info-item{
+    padding:8px;
+    border-bottom:1px solid #ddd;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    font-size:13px;
+}
+
+th{
+    background:#064b9b;
+    color:white;
+    padding:9px 6px;
+    border:1px solid #ccc;
+}
+
+td{
+    padding:9px 6px;
+    border:1px solid #ccc;
+    text-align:center;
+}
+
+td.material{
+    text-align:left;
+}
+
+.footer{
+    margin-top:35px;
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+}
+
+.signature{
+    width:200px;
+    border-top:1px solid #333;
+    text-align:center;
+    padding-top:8px;
+}
+
+.hidden{
+    display:none;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:8px;
+    }
+
+    #bon{
+        padding:15px;
+    }
+
+    .bon-header{
+        flex-direction:column;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:10px;
+    }
+
+    th,td{
+        padding:6px 3px;
+    }
+
+    .footer{
+        flex-direction:column;
+        gap:30px;
+    }
+}
+
+/* PRINT */
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .no-print{
+        display:none !important;
+    }
+
+    .container{
+        max-width:none;
+        padding:0;
+    }
+
+    #bon{
+        display:block !important;
+        box-shadow:none;
+        margin:0;
+        padding:15mm;
+    }
+
+    @page{
+        size:A4;
+        margin:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- APP HEADER -->
+    <div class="header no-print">
+        <h1>Bon de matière</h1>
+        <p>Gestion de la Production et de la Logistique</p>
+    </div>
+
+
+    <!-- FORMULAIRE -->
+    <div class="card no-print">
+
+        <h2>Informations du bon</h2>
+
+        <label>Poste</label>
+        <select id="poste">
+            <option value="450">450</option>
+            <option value="402">402</option>
+        </select>
+
+
+        <label>Magasinier</label>
+        <input
+            type="text"
+            id="magasinier"
+            placeholder="Nom du magasinier"
+        >
+
+
+        <label>Demandeur</label>
+        <select id="demandeur">
+
+            <option value="">-- Sélectionner --</option>
+
+            <option>Kaoutar benzayzon</option>
+
+            <option>Mostapha haddani</option>
+
+            <option>Youssra benayad</option>
+
+            <!-- Tu peux ajouter les coordinateurs ici -->
+            <option>Coordinateur 1</option>
+            <option>Coordinateur 2</option>
+
+        </select>
+
+
+        <label>Projet</label>
+        <select id="projet">
+
+            <option value="V163 WS">V163 WS</option>
+            <option value="V163 damiel">V163 damiel</option>
+            <option value="V136">V136</option>
+            <option value="V110">V110</option>
+            <option value="V236">V236</option>
+            <option value="G145">G145</option>
+            <option value="G170">G170</option>
+
+        </select>
+
+
+        <label>Nombre de Kits</label>
+        <input
+            type="number"
+            id="kits"
+            value="12"
+            min="1"
+        >
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="genererBon()">
+                Générer le bon
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- BON -->
+    <div id="bon" class="hidden">
+
+        <div class="bon-header">
+
+            <div class="bon-title">
+
+                <h1>BON DE MATIÈRE</h1>
+
+                <div>
+                    InCom Opérations
+                </div>
+
+            </div>
+
+            <div class="bon-info">
+
+                <strong>Date :</strong>
+                <span id="dateBon"></span>
+                <br>
+
+                <strong>Heure :</strong>
+                <span id="heureBon"></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATIONS -->
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <strong>Poste :</strong>
+                <span id="bonPoste"></span>
+            </div>
+
+            <div class="info-item">
+                <strong>Projet :</strong>
+                <span id="bonProjet"></span>
+            </div>
+
+            <div class="info-item">
+                <strong>Kits :</strong>
+                <span id="bonKits"></span>
+            </div>
+
+            <div class="info-item">
+                <strong>Magasinier :</strong>
+                <span id="bonMagasinier"></span>
+            </div>
+
+            <div class="info-item">
+                <strong>Demandeur :</strong>
+                <span id="bonDemandeur"></span>
+            </div>
+
+        </div>
+
+
+        <!-- TABLE MATERIALS -->
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Material</th>
+
+                    <th>Code</th>
+
+                    <th>Besoin</th>
+
+                    <th>Rouleaux</th>
+
+                    <th>Quantité des rouleaux</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="materialsBody">
+            </tbody>
+
+        </table>
+
+
+        <div class="footer">
+
+            <div class="signature">
+                Magasinier
+            </div>
+
+            <div class="signature">
+                Demandeur
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="actions no-print hidden" id="buttons">
+
+        <button
+            class="btn-success"
+            onclick="window.print()">
+            🖨️ Imprimer
+        </button>
+
+        <button
+            class="btn-secondary"
+            onclick="window.scrollTo(0,0)">
+            ↑ Retour
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   MATIÈRES
+   =========================================================
+
+   largeur = largeur du matériau en mm
+
+   longueur du rouleau = 100 mètres
+
+   Surface d'un rouleau =
+   largeur en mètres × 100
+
+   Exemple:
+
+   1500 mm = 1.5 m
+
+   1.5 × 100 = 150 M²
+*/
+
+
+const materials = [
+
+    {
+        name:"PEEL PLY 1500MM SST PINK R92PA66",
+        code:"GLSIN10407",
+        largeur:1500,
+        besoin:1804.4535
+    },
+
+    {
+        name:"PEEL PLY 500MM SST PINK R92PA66",
+        code:"GLSIN10423",
+        largeur:500,
+        besoin:281.2117
+    },
+
+    {
+        name:"PEEL PLY 200MM SST PINK R92PA66",
+        code:"GLSIN10424",
+        largeur:200,
+        besoin:22.4948
+    },
+
+    {
+        name:"PEEL PLY 3000MM SST PINK R92PA66",
+        code:"GLSIN10471",
+        largeur:3000,
+        besoin:245.2800
+    },
+
+    {
+        name:"PEEL PLY 1000MM SST PINK R92PA66",
+        code:"GLSIN11068",
+        largeur:1000,
+        besoin:154.8000
+    },
+
+    {
+        name:"MALLA INFUSION VERDE CLARA 1.37M x 175MTS",
+        code:"INFIN10290",
+        largeur:1370,
+        besoin:453.5600
+    }
+
+];
+
+
+/* =========================================================
+   CALCUL ROULEAUX
+   ========================================================= */
+
+function calculerRouleaux(material){
+
+    /*
+       largeur mm → mètres
+    */
+
+    const largeurMetres =
+        material.largeur / 1000;
+
+
+    /*
+       longueur standard du rouleau
+       = 100 mètres
+    */
+
+    const longueurRouleau = 100;
+
+
+    /*
+       surface d'un rouleau
+    */
+
+    const surfaceRouleau =
+        largeurMetres * longueurRouleau;
+
+
+    /*
+       nombre de rouleaux
+    */
+
+    const rouleaux =
+        Math.ceil(material.besoin / surfaceRouleau);
+
+
+    return {
+
+        surfaceRouleau:
+            surfaceRouleau,
+
+        rouleaux:
+            rouleaux
+
+    };
+
+}
+
+
+/* =========================================================
+   GENERER BON
+   ========================================================= */
+
+function genererBon(){
+
+    const poste =
+        document.getElementById("poste").value;
+
+    const magasinier =
+        document.getElementById("magasinier").value ||
+        "Non renseigné";
+
+    const demandeur =
+        document.getElementById("demandeur").value ||
+        "Non renseigné";
+
+    const projet =
+        document.getElementById("projet").value;
+
+    const kits =
+        document.getElementById("kits").value;
+
+
+    /* DATE */
+
+    const maintenant = new Date();
+
+    const date =
+        maintenant.toLocaleDateString("fr-FR");
+
+    const heure =
+        maintenant.toLocaleTimeString("fr-FR");
+
+
+    document.getElementById("dateBon").textContent =
+        date;
+
+    document.getElementById("heureBon").textContent =
+        heure;
+
+
+    /* INFORMATIONS */
+
+    document.getElementById("bonPoste").textContent =
+        poste;
+
+    document.getElementById("bonProjet").textContent =
+        projet;
+
+    document.getElementById("bonKits").textContent =
+        kits;
+
+    document.getElementById("bonMagasinier").textContent =
+        magasinier;
+
+    document.getElementById("bonDemandeur").textContent =
+        demandeur;
+
+
+    /* TABLE */
+
+    const body =
+        document.getElementById("materialsBody");
+
+    body.innerHTML = "";
+
+
+    materials.forEach(material => {
+
+        const calcul =
+            calculerRouleaux(material);
+
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td class="material">
+                ${material.name}
+            </td>
+
+            <td>
+                ${material.code}
+            </td>
+
+            <td>
+                ${material.besoin.toFixed(4)} M²
+            </td>
+
+            <td>
+                ${calcul.rouleaux}
+            </td>
+
+            <td>
+                ${calcul.surfaceRouleau.toFixed(2)} M²
+            </td>
+
+        `;
+
+
+        body.appendChild(tr);
+
+    });
+
+
+    /* AFFICHER */
+
+    document.getElementById("bon")
+        .classList.remove("hidden");
+
+    document.getElementById("buttons")
+        .classList.remove("hidden");
+
+
+    /* DESCENDRE */
+
+    setTimeout(() => {
+
+        document.getElementById("bon")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+    },100);
+
+}
+
+</script>
+
+</body>
+</html>
